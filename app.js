@@ -7,9 +7,10 @@ var PORT = 8080;
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true, }));
 app.get('/product/all', db.GetAllProducts);
-app.get('/product/count/products', db.CountAllProduct);
-app.get('/product/:id', db.GetProduct);
-app.post('/product/new/:img/:desc/:name/:price', db.AddProduct);
-app.get('/product/get/ids', db.GetIds);
+app.get('/product/id/:id', db.GetProductById);
+app.get('/product/offset/:offset', db.GetProductByOffset);
+app.delete('/product/:id', db.DeleteProduct);
+app.post('/product/new/:img/:desc/:name/:price', db.PostProduct);
+app.post('/product/update/:id/:img/:desc/:name/:price', db.UpdateProduct); // Need to review
 
 app.listen(PORT, function () { console.log('Express is listening port:' + PORT + '!'); })

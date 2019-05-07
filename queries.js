@@ -15,14 +15,14 @@ var GetAllProducts = (request, response) => {
     })
 }
 
-// var CountAllProduct = (request, response) => {
-//     pool.query('SELECT * FROM product', (error, result) => {
-//         if (error) {
-//             console.log(error);
-//         }
-//         response.status(200).json(result.rowCount);
-//     })
-// }
+var CountAllProducts = (request, response) => {
+    pool.query('SELECT * FROM product', (error, result) => {
+        if (error) {
+            console.log(error);
+        }
+        response.status(200).json(result.rowCount);
+    })
+}
 
 var GetProductById = (request, response) => {
     var id = request.params.id;
@@ -44,26 +44,17 @@ var GetProductByOffset = (request, response) => {
     })
 }
 
-// var GetIds = (request, response) => {
-//     pool.query('SELECT id FROM product', (error, result) => {
-//         if (error) {
-//             console.log(error);
-//         }
-//         response.status(200).json(result.rows);
-//     })
-// }
-
 var PostProduct = (request, response) => {
-    var img = request.params.img;
-    var desc = request.params.desc;
-    var name = request.params.name;
-    var price = request.params.price;
+    var img = request.body.img;
+    var desc = request.body.description;
+    var name = request.body.name;
+    var price = request.body.price;
 
     pool.query('INSERT INTO product (description, name, img, price) VALUES ($1, $2, $3, $4);',[desc, name, '../assets/img/'+img, price], (error, result) => {
         if (error) {
             console.log(error);
         }
-        response.status(200).json("Product posted.");
+        response.status(200).json(result);
     })
 }
 
@@ -108,9 +99,8 @@ var UpdateProduct = (request, response) => {
 
     for (var i = 0; i < 4; i++)
     {
-        if(values[i].value != "empty")
+        if(values[i].value != "empty" || values[i].value != -1)
         {
-            
             if(values[i].name == "img")
             {
                 text = text + values[i].name + "='../assets/img/" + values[i].value + "'" + ", ";
@@ -131,9 +121,8 @@ var UpdateProduct = (request, response) => {
         if (error) {
             console.log(error);
         }
-        // response.status(200).json("Product updated.");
         response.status(200).json(text);
     })
 }
 
-module.exports = { GetAllProducts, GetProductById, GetProductByOffset, PostProduct, DeleteProduct, UpdateProduct };
+module.exports = { GetAllProducts, GetProductById, GetProductByOffset, PostProduct, DeleteProduct, UpdateProduct, CountAllProducts };

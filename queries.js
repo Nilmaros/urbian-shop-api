@@ -1,18 +1,11 @@
 const POOL = require('pg').Pool;
+
 const pool = new POOL({
-    user: 'zuyogtvfzbpqhk',
-    password: 'ed6e50c139e5725ffffbf3762b0f537f0ec2fd5b881ed9da8d05f49c71dd4f08',
-    host: 'ec2-184-73-210-189.compute-1.amazonaws.com',
-    database: 'd1kc18mu6j586i',
+    user: 'Mitchell',
+    host: 'localhost',
+    database: 'api',
     port: '5432'
 });
-
-// const pool = new POOL({
-//     user: 'Mitchell',
-//     host: 'localhost',
-//     database: 'api',
-//     port: '5432'
-// });
 
 var GetAllProducts = (request, response) => {
     pool.query('SELECT * FROM products', (error, result) => {

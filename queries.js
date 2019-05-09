@@ -1,13 +1,21 @@
 const POOL = require('pg').Pool;
 const pool = new POOL({
-    user: 'Mitchell',
-    host: 'localhost',
-    database: 'api',
+    user: 'zuyogtvfzbpqhk',
+    password: 'ed6e50c139e5725ffffbf3762b0f537f0ec2fd5b881ed9da8d05f49c71dd4f08',
+    host: 'ec2-184-73-210-189.compute-1.amazonaws.com',
+    database: 'd1kc18mu6j586i',
     port: '5432'
 });
 
+// const pool = new POOL({
+//     user: 'Mitchell',
+//     host: 'localhost',
+//     database: 'api',
+//     port: '5432'
+// });
+
 var GetAllProducts = (request, response) => {
-    pool.query('SELECT * FROM product', (error, result) => {
+    pool.query('SELECT * FROM products', (error, result) => {
         if (error) {
             console.log(error);
         }
@@ -16,7 +24,7 @@ var GetAllProducts = (request, response) => {
 }
 
 var CountAllProducts = (request, response) => {
-    pool.query('SELECT * FROM product', (error, result) => {
+    pool.query('SELECT * FROM products', (error, result) => {
         if (error) {
             console.log(error);
         }
@@ -26,7 +34,7 @@ var CountAllProducts = (request, response) => {
 
 var GetProductById = (request, response) => {
     var id = request.params.id;
-    pool.query('SELECT * FROM product WHERE id=$1',[id], (error, result) => {
+    pool.query('SELECT * FROM products WHERE id=$1',[id], (error, result) => {
         if (error) {
             console.log(error);
         }
@@ -36,7 +44,7 @@ var GetProductById = (request, response) => {
 
 var GetProductByOffset = (request, response) => {
     var offset = request.params.offset;
-    pool.query('SELECT * FROM product ORDER BY id OFFSET $1 FETCH FIRST 1 ROW ONLY',[offset], (error, result) => {
+    pool.query('SELECT * FROM products ORDER BY id OFFSET $1 FETCH FIRST 1 ROW ONLY',[offset], (error, result) => {
         if (error) {
             console.log(error);
         }
@@ -50,7 +58,7 @@ var PostProduct = (request, response) => {
     var name = request.body.name;
     var price = request.body.price;
 
-    pool.query('INSERT INTO product (description, name, img, price) VALUES ($1, $2, $3, $4);',[desc, name, '../assets/img/'+img, price], (error, result) => {
+    pool.query('INSERT INTO products (description, name, img, price) VALUES ($1, $2, $3, $4);',[desc, name, '../assets/img/'+img, price], (error, result) => {
         if (error) {
             console.log(error);
         }
@@ -60,7 +68,7 @@ var PostProduct = (request, response) => {
 
 var DeleteProduct = (request, response) => {
     var id = request.params.id;
-    pool.query('DELETE FROM product WHERE id=$1',[id], (error, result) => {
+    pool.query('DELETE FROM products WHERE id=$1',[id], (error, result) => {
         if (error) {
             console.log(error);
         }
@@ -95,7 +103,7 @@ var UpdateProduct = (request, response) => {
          }
     ];
 
-    var text = 'UPDATE product SET ';
+    var text = 'UPDATE products SET ';
 
     for (var i = 0; i < 4; i++)
     {

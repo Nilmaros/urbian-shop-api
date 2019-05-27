@@ -12,6 +12,6 @@ app.get('/product/id/:id', db.GetProductById);
 app.get('/product/offset/:offset', db.GetProductByOffset);
 app.delete('/product/:id', db.DeleteProduct);
 app.post('/product/new', db.PostProduct);
-app.post('/product/update/:id/:img/:desc/:name/:price', db.UpdateProduct); // Need to review
+app.post('/product/update', db.UpdateProduct); // Need to review
 
 app.listen(PORT, function () { console.log('Express is listening port:' + PORT + '!'); })

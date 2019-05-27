@@ -70,11 +70,11 @@ var DeleteProduct = (request, response) => {
 }
 
 var UpdateProduct = (request, response) => {
-    var img = request.params.img;
-    var desc = request.params.desc;
-    var name = request.params.name;
-    var price = request.params.price;
-    var id = request.params.id;
+    var img = request.body.img;
+    var desc = request.body.desc;
+    var name = request.body.name;
+    var price = request.body.price;
+    var id = request.body.id;
 
     var values =
     [
@@ -104,7 +104,7 @@ var UpdateProduct = (request, response) => {
         {
             if(values[i].name == "img")
             {
-                text = text + values[i].name + "='../assets/img/" + values[i].value + "'" + ", ";
+                text = text + values[i].name + "='" + values[i].value + "'" + ", ";
             }
             else if(values[i].name == "price")
             {
@@ -120,7 +120,7 @@ var UpdateProduct = (request, response) => {
 
     pool.query(text,[id], (error, result) => {
         if (error) {
-            console.log(error);
+            response.status(500).json(error);
         }
         response.status(200).json(text);
     })

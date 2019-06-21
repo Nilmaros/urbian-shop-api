@@ -1,11 +1,14 @@
 const POOL = require('pg').Pool;
 
 const pool = new POOL({
-    user: 'Mitchell',
-    host: 'localhost',
-    database: 'api',
-    port: '5432'
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    port: process.env.DB_PORT
 });
+
+console.log(pool);
 
 var GetAllProducts = (request, response) => {
     pool.query('SELECT * FROM products', (error, result) => {

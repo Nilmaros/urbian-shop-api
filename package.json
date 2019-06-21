@@ -1,16 +1,22 @@
 {
-    "name": "urbian-shop-api",
-    "description": "api",
-    "version": "1.0.0",
-    "license": "MIT",
-    "main": "app.js",
-    "scripts": {
-      "start": "node app.js"
-    },
-    "dependencies": {
-      "express": "4.16.4"
-    },
-    "engines": {
-        "node": "6.6.0"
-    }
+  "name": "urbian-shop-api",
+  "description": "api",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "heroku-postbuild": "npm install --production"
+  },
+  "dependencies": {
+    "express": "4.16.4",
+    "pg": "^7.11.0"
+  },
+  "engines": {
+    "node": "6.6.0",
+    "npm": "6.4.1"
+  },
+  "devDependencies": {
+    "dotenv": "^8.0.0"
   }
+}

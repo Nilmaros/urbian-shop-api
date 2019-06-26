@@ -1,20 +1,15 @@
 const POOL = require('pg').Pool;
 
-if (dotenv) {
-    const pool = new POOL({
+const pool = new POOL({
         user: process.env.DB_USERNAME,
         password: process.env.DB_PASSWORD,
         host: process.env.DB_HOST,
         database: process.env.DATABASE_URL,
         port: process.env.DB_PORT
     });
-} else {
-    const pool = new POOL({
-        database: process.env.DATABASE_URL
-    })
-}
 
 console.log(pool);
+console.log(process.env.DATABASE_URL);
 
 var GetAllProducts = (request, response) => {
     pool.query('SELECT * FROM products', (error, result) => {

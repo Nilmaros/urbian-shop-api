@@ -1,12 +1,12 @@
 const POOL = require('pg').Pool;
 
 const pool = new POOL({
-        user: process.env.DB_USERNAME,
-        password: process.env.DB_PASSWORD,
-        host: process.env.DB_HOST,
-        database: process.env.DATABASE_URL,
-        port: process.env.DB_PORT
-    });
+    // user: process.env.DB_USERNAME,
+    // password: process.env.DB_PASSWORD,
+    // host: process.env.DB_HOST,
+    database: process.env.DATABASE_URL
+    //port: process.env.DB_PORT
+});
 
 console.log(pool);
 console.log(process.env.DATABASE_URL);

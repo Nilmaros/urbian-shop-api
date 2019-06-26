@@ -1,4 +1,3 @@
-require('dotenv').config();
 var db = require('./queries');
 var express = require('express');
 var bodyparser = require('body-parser');

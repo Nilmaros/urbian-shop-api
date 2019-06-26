@@ -2,7 +2,7 @@ var db = require('./queries');
 var express = require('express');
 var bodyparser = require('body-parser');
 var app = express();
-var PORT = process.env.PORT || 3000;
+var PORT = 3000;
 /* req stands for request, res stands for response */
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true, }));

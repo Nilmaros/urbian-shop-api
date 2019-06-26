@@ -4,7 +4,8 @@ const pool = new POOL({
     // user: process.env.DB_USERNAME,
     // password: process.env.DB_PASSWORD,
     // host: process.env.DB_HOST,
-    database: process.env.DATABASE_URL
+    database: process.env.DATABASE_URL,
+    ssl: true
     //port: process.env.DB_PORT
 });
 

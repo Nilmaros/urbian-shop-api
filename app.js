@@ -20,7 +20,7 @@ const http = require('http');
 
 const server = http.createServer((request, response) => {
     response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end(process.env.DATABASE_URL);
+    response.end(process.env.SQLCONNSTR_PROD_DATABASE_URL);
 });
 
 const port = process.env.DATA || 1337;

@@ -4,12 +4,12 @@ const pool = new POOL({
     user: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     host: process.env.DB_HOST,
-    database: process.env.DATABASE_URL,
+    database: process.env.PROD_DATABASE_URL,
     port: process.env.DB_PORT
 });
 
 console.log(pool);
-console.log(process.env.DATABASE_URL);
+console.log(process.env.PROD_DATABASE_URL);
 
 var GetAllProducts = (request, response) => {
     pool.query('SELECT * FROM products', (error, result) => {

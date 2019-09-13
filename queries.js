@@ -1,15 +1,15 @@
 const POOL = require('pg').Pool;
 
 const pool = new POOL({
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    host: process.env.DB_HOST,
-    database: process.env.PROD_DATABASE_URL,
-    port: process.env.DB_PORT
+    user: process.env.SQLAZURECONNSTR_PROD_DB_USERNAME,
+    password: process.env.SQLAZURECONNSTR_PROD_DB_PASSWORD,
+    //host: process.env.SQLAZURECONNSTR_PROD_DB_HOST,
+    database: process.env.SQLAZURECONNSTR_PROD_DATABASE_URL,
+    port: process.env.SQLAZURECONNSTR_PROD_DB_PORT
 });
 
 console.log(pool);
-console.log(process.env.PROD_DATABASE_URL);
+console.log(process.env.SQLAZURECONNSTR_PROD_DATABASE_URL);
 
 var GetAllProducts = (request, response) => {
     pool.query('SELECT * FROM products', (error, result) => {

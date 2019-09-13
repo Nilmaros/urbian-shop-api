@@ -13,5 +13,5 @@ app.get('/product/offset/:offset', db.GetProductByOffset);
 app.delete('/product/:id', db.DeleteProduct);
 app.post('/product/new', db.PostProduct);
 app.post('/product/update', db.UpdateProduct); // Need to review
-console.log("I am alive!!" + SQLCONNSTR_PROD_DATABASE_URL);
+console.log("I am alive!!" + PROD_DATABASE_URL);
 app.listen(PORT, function () { console.log('Express is listening port:' + PORT + '!'); })

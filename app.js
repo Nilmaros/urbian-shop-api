@@ -7,6 +7,7 @@ var PORT = process.env.PORT || 8080;
 app.use(express.static(__dirname));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true, }));
+app.get('/', console.log("Whatsapp!!"));
 app.get('/product/all', db.GetAllProducts);
 app.get('/product/all/count', db.CountAllProducts);
 app.get('/product/id/:id', db.GetProductById);

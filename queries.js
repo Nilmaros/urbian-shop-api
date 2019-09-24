@@ -1,15 +1,17 @@
-const POOL = require('pg').Pool;
-
-const pool = new POOL({
+var sql = require("mssql");
+var config = {
     user: process.env.PROD_DB_USERNAME,
     password: process.env.PROD_DB_PASSWORD,
-    host: process.env.PROD_DB_HOST,
-    database: process.env.PROD_DATABASE_URL,
-    port: process.env.PROD_DB_PORT
-});
+    database: process.env.PROD_DATABASE_NAME,
+    server: process.env.PROD_DB_SERVER
+}
 
-console.log(pool);
-console.log(process.env.PROD_DATABASE_URL);
+// Connect to database
+sql.connect(config, function(err) {
+    if (err) console.log(err);
+})
+
+var pool = new sql.Request();
 
 var GetAllProducts = (request, response) => {
     pool.query('SELECT * FROM products', (error, result) => {

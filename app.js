@@ -7,7 +7,6 @@ var PORT = process.env.PORT || 8080;
 app.use(express.static(__dirname));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true, }));
-app.get('/', console.log("Whatsapp!!"));
 app.get('/product/all', db.GetAllProducts);
 app.get('/product/all/count', db.CountAllProducts);
 app.get('/product/id/:id', db.GetProductById);
@@ -15,5 +14,4 @@ app.get('/product/offset/:offset', db.GetProductByOffset);
 app.delete('/product/:id', db.DeleteProduct);
 app.post('/product/new', db.PostProduct);
 app.post('/product/update', db.UpdateProduct); // Need to review
-console.log("I am alive!!");
 app.listen(PORT, function () { console.log('Express is listening port:' + PORT + '!'); })

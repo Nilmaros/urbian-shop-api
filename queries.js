@@ -15,10 +15,10 @@ var GetAllProducts = (request, response) => {
         return sql.query`select * from dbo.products`
     }).then(result => {
         response.status(200).json(result.recordset);
+        sql.close();
     }).catch(error => {
         console.log(error);
     })
-    sql.close();
 }
 
 var CountAllProducts = (request, response) => {

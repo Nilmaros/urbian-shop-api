@@ -23,8 +23,8 @@ app.get('/product/all', db.GetAllProducts);
 // app.delete('/product/:id', db.DeleteProduct);
 // app.post('/product/new', db.PostProduct);
 // app.post('/product/update', db.UpdateProduct); // Need to review
-app.get('/', (req, res) => {
-    res.send(config.user);
+app.get('/', () => {
+    db.GetAllProducts;
 });
 app.listen(PORT, function () { console.log('Express is listening port:' + PORT + '!'); })
 

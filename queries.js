@@ -15,7 +15,6 @@ var GetAllProducts = (request, response) => {
         return sql.query`select * from dbo.products`
     }).then(result => {
         response.status(200).json(result.recordset);
-        console.log(result);
     }).catch(error => {
         console.log(error);
     })

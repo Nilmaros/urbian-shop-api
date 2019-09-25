@@ -2,7 +2,7 @@ const sql = require("mssql");
 const config = {
     user: process.env.PROD_DB_USERNAME,
     password: process.env.PROD_DB_PASSWORD,
-    database: process.env.PROD_DATABASE_NAME,
+    database: process.env.PROD_DB_NAME,
     server: process.env.PROD_DB_SERVER,
     options: {
         encrypt: true

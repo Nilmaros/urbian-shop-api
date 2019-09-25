@@ -4,7 +4,7 @@ const config = {
     password: process.env.PROD_DB_PASSWORD,
     database: process.env.PROD_DATABASE_NAME,
     server: process.env.PROD_DB_SERVER,
-    options: {  
+    options: {
         encrypt: true
       }
 }

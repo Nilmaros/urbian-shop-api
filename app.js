@@ -1,4 +1,4 @@
-//var db = require('./queries');
+var db = require('./queries');
 var express = require('express');
 var bodyparser = require('body-parser');
 var app = express();
@@ -7,7 +7,7 @@ var PORT = process.env.PORT || 8080;
 app.use(express.static(__dirname));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true, }));
-// app.get('/product/all', db.GetAllProducts);
+app.get('/product/all', db.GetAllProducts);
 // app.get('/product/all/count', db.CountAllProducts);
 // app.get('/product/id/:id', db.GetProductById);
 // app.get('/product/offset/:offset', db.GetProductByOffset);

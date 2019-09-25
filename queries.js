@@ -10,9 +10,8 @@ const config = {
 }
 
 var GetAllProducts = (request, response) => {
-    
     sql.connect(config).then(() => {
-        return sql.query`select * from dbo.products`
+        return sql.query('select * from dbo.products')
     }).then(result => {
         response.status(200).json(result.recordset);
         sql.close();
@@ -22,31 +21,39 @@ var GetAllProducts = (request, response) => {
 }
 
 var CountAllProducts = (request, response) => {
-    pool.query('SELECT * FROM products', (error, result) => {
-        if (error) {
-            console.log(error);
-        }
-        response.status(200).json(console.log(result.rowCount));
+    sql.connect(config).then(() => {
+        return sql.query('SELECT * FROM dbo.products')
+    }).then(result => {
+        response.status(200).json(result.recordset.length);
+        sql.close();
+    }).catch(error => {
+        console.log(error);
     })
 }
-
+//---
 var GetProductById = (request, response) => {
-    var id = request.params.id;
-    pool.query('SELECT * FROM products WHERE id=$1',[id], (error, result) => {
-        if (error) {
-            console.log(error);
-        }
-        response.status(200).json(result.rows);
+    var id = request.query.id;
+
+    sql.connect(config).then(() => {
+        return sql.query`SELECT * FROM dbo.products WHERE id=${id}`
+    }).then(result => {
+        response.status(200).json(result.recordset);
+        sql.close();
+    }).catch(error => {
+        console.log(error);
     })
 }
 
 var GetProductByOffset = (request, response) => {
-    var offset = request.params.offset;
-    pool.query('SELECT * FROM products ORDER BY id OFFSET $1 FETCH FIRST 1 ROW ONLY',[offset], (error, result) => {
-        if (error) {
-            console.log(error);
-        }
-        response.status(200).json(result.rows);
+    var offset = request.query.offset;
+
+    sql.connect(config).then(() => {
+        return sql.query`SELECT * FROM dbo.products ORDER BY id OFFSET CAST(${offset} AS int) ROWS FETCH FIRST 1 ROW ONLY`
+    }).then(result => {
+        response.status(200).json(result.recordset);
+        sql.close();
+    }).catch(error => {
+        console.log(error);
     })
 }
 
@@ -56,27 +63,32 @@ var PostProduct = (request, response) => {
     var name = request.body.name;
     var price = request.body.price;
 
-    pool.query('INSERT INTO products (description, name, img, price) VALUES ($1, $2, $3, $4);',[desc, name, '../assets/img/'+img, price], (error, result) => {
-        if (error) {
-            console.log(error);
-        }
+    sql.connect(config).then(() => {
+        return sql.query`INSERT INTO dbo.products (description, name, img, price) VALUES (${desc}, ${name}, CONCAT('../assets/img/',${img}), ${price})`
+    }).then(result => {
         response.status(200).json(result);
+        sql.close();
+    }).catch(error => {
+        console.log(error);
     })
 }
 
 var DeleteProduct = (request, response) => {
-    var id = request.params.id;
-    pool.query('DELETE FROM products WHERE id=$1',[id], (error, result) => {
-        if (error) {
-            console.log(error);
-        }
+    var id = request.query.id;
+
+    sql.connect(config).then(() => {
+        return sql.query`DELETE FROM dbo.products WHERE id=${id}`
+    }).then(() => {
         response.status(200).json("Product deleted.");
+        sql.close();
+    }).catch(error => {
+        console.log(error);
     })
 }
 
 var UpdateProduct = (request, response) => {
     var img = request.body.img;
-    var desc = request.body.desc;
+    var desc = request.body.description;
     var name = request.body.name;
     var price = request.body.price;
     var id = request.body.id;
@@ -100,12 +112,12 @@ var UpdateProduct = (request, response) => {
             "value": price
          }
     ];
-
-    var text = 'UPDATE products SET ';
+    
+    var text = 'UPDATE dbo.products SET ';
 
     for (var i = 0; i < 4; i++)
     {
-        if(values[i].value != "empty" || values[i].value != -1)
+        if(values[i].value != "empty" && values[i].value != -1 && values[i].value != undefined)
         {
             if(values[i].name == "img")
             {
@@ -121,13 +133,15 @@ var UpdateProduct = (request, response) => {
             }
         }
     }
-    text = text.substring(0,text.length-2) + ' WHERE id=$1';
+    text = text.substring(0,text.length-2);
 
-    pool.query(text,[id], (error, result) => {
-        if (error) {
-            response.status(500).json(error);
-        }
-        response.status(200).json(text);
+    sql.connect(config).then(() => {
+        return sql.query(text + ` WHERE id=${id}`)
+    }).then(() => {
+        response.status(200).json("Updated.");
+        sql.close();
+    }).catch(error => {
+        console.log(error);
     })
 }
 

@@ -6,7 +6,6 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "heroku-postbuild": "npm install --production",
     "start_local": "node -r dotenv/config app.js"
   },
   "dependencies": {

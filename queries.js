@@ -16,10 +16,10 @@ var GetAllProducts = (request, response) => {
     }).then(result => {
         response.status(200).json(result.recordset);
         console.log(result);
-        sql.close();
     }).catch(error => {
         console.log(error);
     })
+    sql.close();
 }
 
 var CountAllProducts = (request, response) => {

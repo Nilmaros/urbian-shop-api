@@ -1,24 +1,23 @@
-var sql = require("mssql");
-var config = {
+const sql = require("mssql");
+const config = {
     user: process.env.PROD_DB_USERNAME,
     password: process.env.PROD_DB_PASSWORD,
     database: process.env.PROD_DATABASE_NAME,
-    server: process.env.PROD_DB_SERVER
+    server: process.env.PROD_DB_SERVER,
+    options: {  
+        encrypt: true
+      }
 }
 
-// Connect to database
-sql.connect(config, function(err) {
-    if (err) console.log(err);
-})
-
-var pool = new sql.Request();
-
 var GetAllProducts = (request, response) => {
-    pool.query('SELECT * FROM products', (error, result) => {
-        if (error) {
-            console.log(error);
-        }
-        response.status(200).json(result.rows);
+    
+    sql.connect(config).then(() => {
+        return sql.query`select * from dbo.products`
+    }).then(result => {
+        response.status(200).json(result.recordset);
+        console.log(result);
+    }).catch(error => {
+        console.log(error);
     })
 }
 
@@ -27,7 +26,7 @@ var CountAllProducts = (request, response) => {
         if (error) {
             console.log(error);
         }
-        response.status(200).json(result.rowCount);
+        response.status(200).json(console.log(result.rowCount));
     })
 }
 

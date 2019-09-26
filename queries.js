@@ -17,6 +17,7 @@ var GetAllProducts = (request, response) => {
         sql.close();
     }).catch(error => {
         console.log(error);
+        sql.close();
     })
 }
 
@@ -28,6 +29,7 @@ var CountAllProducts = (request, response) => {
         sql.close();
     }).catch(error => {
         console.log(error);
+        sql.close();
     })
 }
 //---
@@ -41,6 +43,7 @@ var GetProductById = (request, response) => {
         sql.close();
     }).catch(error => {
         console.log(error);
+        sql.close();
     })
 }
 
@@ -54,6 +57,7 @@ var GetProductByOffset = (request, response) => {
         sql.close();
     }).catch(error => {
         console.log(error);
+        sql.close();
     })
 }
 
@@ -70,6 +74,7 @@ var PostProduct = (request, response) => {
         sql.close();
     }).catch(error => {
         console.log(error);
+        sql.close();
     })
 }
 
@@ -83,6 +88,7 @@ var DeleteProduct = (request, response) => {
         sql.close();
     }).catch(error => {
         console.log(error);
+        sql.close();
     })
 }
 
@@ -142,6 +148,7 @@ var UpdateProduct = (request, response) => {
         sql.close();
     }).catch(error => {
         console.log(error);
+        sql.close();
     })
 }
 

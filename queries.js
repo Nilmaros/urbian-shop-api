@@ -1,4 +1,4 @@
-const sql = require("mssql");
+const mssql = require("mssql");
 const config = {
     user: process.env.PROD_DB_USERNAME,
     password: process.env.PROD_DB_PASSWORD,
@@ -9,20 +9,20 @@ const config = {
       }
 }
 
+const sql = new mssql.ConnectionPool(config).connect();
+
 var GetAllProducts = (request, response) => {
-    sql.connect(config).then(pool => {
+    sql.then(pool => {
         return pool.request().query('select * from dbo.products')
     }).then(result => {
         response.status(200).json(result.recordset);
-        sql.close();
     }).catch(error => {
         console.log(error);
-        sql.close();
     })
 }
 
 var CountAllProducts = (request, response) => {
-    sql.connect(config).then(pool => {
+    sql.then(pool => {
         return pool.request().query('SELECT * FROM dbo.products')
     }).then(result => {
         response.status(200).json(result.recordset.length);
@@ -34,28 +34,24 @@ var CountAllProducts = (request, response) => {
 var GetProductById = (request, response) => {
     var id = request.query.id;
 
-    sql.connect(config).then(pool => {
+    sql.then(pool => {
         return pool.request().query`SELECT * FROM dbo.products WHERE id=${id}`
     }).then(result => {
         response.status(200).json(result.recordset);
-        sql.close();
     }).catch(error => {
         console.log(error);
-        sql.close();
     })
 }
 
 var GetProductByOffset = (request, response) => {
     var offset = request.query.offset;
 
-    sql.connect(config).then(pool => {
+    sql.then(pool => {
         return pool.request().query`SELECT * FROM dbo.products ORDER BY id OFFSET CAST(${offset} AS int) ROWS FETCH FIRST 1 ROW ONLY`
     }).then(result => {
         response.status(200).json(result.recordset);
-        sql.close();
     }).catch(error => {
         console.log(error);
-        sql.close();
     })
 }
 
@@ -65,28 +61,24 @@ var PostProduct = (request, response) => {
     var name = request.body.name;
     var price = request.body.price;
 
-    sql.connect(config).then(pool => {
+    sql.then(pool => {
         return pool.request().query`INSERT INTO dbo.products (description, name, img, price) VALUES (${desc}, ${name}, CONCAT('../assets/img/',${img}), ${price})`
     }).then(result => {
         response.status(200).json(result);
-        sql.close();
     }).catch(error => {
         console.log(error);
-        sql.close();
     })
 }
 
 var DeleteProduct = (request, response) => {
     var id = request.query.id;
 
-    sql.connect(config).then(pool => {
+    sql.then(pool => {
         return pool.request().query`DELETE FROM dbo.products WHERE id=${id}`
     }).then(() => {
         response.status(200).json("Product deleted.");
-        sql.close();
     }).catch(error => {
         console.log(error);
-        sql.close();
     })
 }
 
@@ -139,14 +131,12 @@ var UpdateProduct = (request, response) => {
     }
     text = text.substring(0,text.length-2);
 
-    sql.connect(config).then(pool => {
+    sql.then(pool => {
         return pool.request().query(text + ` WHERE id=${id}`)
     }).then(() => {
         response.status(200).json("Updated.");
-        sql.close();
     }).catch(error => {
         console.log(error);
-        sql.close();
     })
 }
 

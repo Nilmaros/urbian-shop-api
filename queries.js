@@ -38,14 +38,14 @@ var CountAllProducts = (request, response) => {
 var GetProductById = (request, response) => {
     var id = request.query.id;
 
-    sql.connect(config).then(() => {
-        return sql.query`SELECT * FROM dbo.products WHERE id=${id}`
+    pool.connect(config).then(() => {
+        return pool.query`SELECT * FROM dbo.products WHERE id=${id}`
     }).then(result => {
         response.status(200).json(result.recordset);
-        sql.close();
+        pool.close();
     }).catch(error => {
         console.log(error);
-        sql.close();
+        pool.close();
     })
 }
 
